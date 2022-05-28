@@ -1,9 +1,9 @@
+import time
 from BinaryTree import BinaryTree
 
 def readData(nome_do_arquivo: str)->dict:
 
     try:
-        
         dominios = {}
         with open(nome_do_arquivo, "r", encoding="utf-8") as file:
             lines = file.readlines()
@@ -29,6 +29,7 @@ def readData(nome_do_arquivo: str)->dict:
 dominios = readData('url_louise.csv')
 
 while(True):
+    print()
     print("+------Opções de comandos------+")
     print("| 1 - Busca de URL             |")
     print("| #viewtree - percorrer árvore |")       
@@ -44,18 +45,23 @@ while(True):
     if input_url[0:1] == "#":
         if input_url.lower() == "#sair":
             print("Encerrando o programa...")
+            time.sleep(1)
             break
         
         elif input_url.lower().split()[0] == "#viewtree":
             arv = dominios[input_url.split()[1]]
             arv.viewtree()
 
+   
     elif input_url[0:3] == "www" or input_url[0:4] == "http":
+        try:
             entrada_sites = input_url.split("/")
             site = dominios[entrada_sites[0]].match(entrada_sites)
             print(site)     
 
-            
-    #200 OK - Requisição bem-sucedida!
-    
-    #400 Bad Request - Servidor não atendeu a requisição.
+            if site:
+                print("200 OK - Requisição bem-sucedida")
+            else:
+                print("404 Bad Request- Servidor não atendeu a requisição.") 
+        except KeyError:
+            print("404 Bad Request- Servidor não atendeu a requisição.")

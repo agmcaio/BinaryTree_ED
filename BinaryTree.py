@@ -9,6 +9,7 @@ class PosicaoNaoVazia(NodeException):
 class ArvoreVaziaException(Exception):
     pass
 
+
 '''
 Classe para instanciação de nós que vão ficar na memória
 '''
@@ -249,10 +250,12 @@ class BinaryTree:
             if not site:
                 break
 
-        return site
-        #preciso retonar o nó p ter acesso a pag do site (nó)
-        
-        #node.data == paths
-        #path.pop()
-        #len == 0 return node
-        
+            if node.hasLeftChild():
+                if node.leftChild.data == path:
+                    return self.__match(node.leftChild, paths)
+            
+            if node.hasRightChild():
+                if node.rightChild.data == path:
+                    return self.__match(node.rightChild, paths)
+
+        return site        
